@@ -346,3 +346,120 @@ UNLOCK TABLES;
 
 -- Dump completed on 2022-08-09 15:25:18
 
+DROP TABLE IF EXISTS `gifts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gifts` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `body` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metadata` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`metadata`)),
+  UNIQUE KEY `id` (`id`),
+  KEY `gifts_name_idx` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gifts`
+--
+
+LOCK TABLES `gifts` WRITE;
+/*!40000 ALTER TABLE `gifts` DISABLE KEYS */;
+INSERT INTO `gifts` VALUES (1,'veritatis','Similique voluptatem modi id necessitatibus eos adipisci molestiae. Iste debitis qui quis atque ullam. Est ipsa natus facere ex.',NULL),(2,'omnis','Voluptates earum iste quo et repudiandae. Enim nam ut necessitatibus tenetur. Quisquam maiores incidunt rerum impedit.',NULL),(3,'ratione','Beatae recusandae laboriosam et in voluptate sunt minima. Quo impedit et tempore. Eveniet non consequatur nemo explicabo incidunt et.',NULL),(4,'voluptatem','Rerum ea et voluptatibus pariatur. Repellat doloribus esse voluptas odio repellat. Tempora corporis reprehenderit sunt earum rem necessitatibus. Vel consectetur maxime praesentium rerum.',NULL),(5,'vel','Expedita libero libero quia similique sed sit. Numquam quaerat culpa possimus et. Quod et nulla nobis recusandae itaque nihil aliquam. Rem ex quas debitis et ducimus unde.',NULL),(6,'omnis','Praesentium nihil odit aut aspernatur. Velit occaecati sunt harum sit. Corporis laboriosam sapiente ut expedita incidunt nam.',NULL),(7,'sint','Autem molestiae quae aliquam laboriosam voluptate. Sit atque nihil et. Iusto provident non blanditiis et officia.',NULL),(8,'quod','Est amet reprehenderit corporis voluptates porro. Suscipit est ipsa odit ex incidunt eveniet aut. Distinctio omnis consequatur voluptatem perferendis qui harum. Totam laboriosam libero facilis iste.',NULL),(9,'harum','Nulla dicta necessitatibus harum quia. Praesentium mollitia velit quam eum. Modi vel rerum est voluptatibus distinctio consequatur rerum.',NULL),(10,'vel','Quo labore sed iusto eligendi qui. Et labore soluta mollitia saepe nam inventore. Ut accusantium porro rem quia nisi. Quam maiores quae nostrum asperiores.',NULL);
+/*!40000 ALTER TABLE `gifts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `music`
+--
+
+DROP TABLE IF EXISTS `music`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `music` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `author` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `album` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metadata` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`metadata`)),
+  UNIQUE KEY `id` (`id`),
+  KEY `music_name_idx` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `music`
+--
+
+LOCK TABLES `music` WRITE;
+/*!40000 ALTER TABLE `music` DISABLE KEYS */;
+INSERT INTO `music` VALUES (21,'Kub Ltd','Nasir Osinski','South','830738266'),(22,'Swift-Kris','Kelton Dooley','North','90765646'),(23,'Jacobson, Abernathy and Shields','Noemi Crist','New','71262387'),(24,'Abshire PLC','Elva Wilderman','East','16588821'),(25,'Dare Group','Lilyan Breitenberg','North','4285'),(26,'Sawayn and Sons','Trinity Kerluke DVM','East','7146376'),(27,'Kassulke PLC','Billie Swift','Port','860865'),(28,'Marks, Wehner and Grady','Aida Hettinger','East','648'),(29,'Rempel Inc','Prof. Kamryn Marquardt','South','678'),(30,'Deckow, Beier and Frami','Nona Jacobs PhD','East','3'),(31,'Watsica-Kerluke','Elza Schinner','North','426840913'),(32,'Johnston-Parker','Kianna Jones','West','4691144'),(33,'Beer, Klein and Roberts','Barney Gerlach','East','32921362'),(34,'Bins Inc','Ivah Beer I','Lake','2308'),(35,'Conroy Group','Tanya Gerhold','East','1118'),(36,'Hettinger PLC','Haven O\'Keefe','Port','888883120');
+/*!40000 ALTER TABLE `music` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_gifts`
+--
+
+DROP TABLE IF EXISTS `user_gifts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_gifts` (
+  `to_user_id` bigint(20) unsigned NOT NULL,
+  `from_user_id` bigint(20) unsigned NOT NULL,
+  `gifts_id` bigint(20) unsigned NOT NULL,
+  KEY `to_user_id` (`to_user_id`),
+  KEY `from_user_id` (`from_user_id`),
+  KEY `gifts_id` (`gifts_id`),
+  CONSTRAINT `user_gifts_ibfk_1` FOREIGN KEY (`to_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `user_gifts_ibfk_2` FOREIGN KEY (`from_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `user_gifts_ibfk_3` FOREIGN KEY (`gifts_id`) REFERENCES `gifts` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_gifts`
+--
+
+LOCK TABLES `user_gifts` WRITE;
+/*!40000 ALTER TABLE `user_gifts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_gifts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_music`
+--
+
+DROP TABLE IF EXISTS `user_music`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_music` (
+  `user_id` bigint(20) unsigned NOT NULL,
+  `music_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`,`music_id`),
+  KEY `music_id` (`music_id`),
+  CONSTRAINT `user_music_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `user_music_ibfk_2` FOREIGN KEY (`music_id`) REFERENCES `music` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_music`
+--
+
+LOCK TABLES `user_music` WRITE;
+/*!40000 ALTER TABLE `user_music` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_music` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-08-09 15:41:12
+
